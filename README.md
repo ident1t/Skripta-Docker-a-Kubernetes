@@ -28,7 +28,7 @@ Nejprve si ukážeme, jak stáhnout image z registru pomocí *docker pull* pří
 Teď, když máme stažený náš image, můžeme přejít k vytvoření a spuštění našeho kontejneru pomíc příkazu *docker run*:
 
 	$ docker run --name <název_kontejneru> <název_image>:<verze_image> //např. docker run --name my-plex plex:latest
-**Tohle je pouze nutné minimum, co je potřeba pro spuštění kontejneru, příkaz *docker run* má mnohem více proměnných.*<br>
+**Tohle je pouze nutné minimum, co je potřeba pro spuštění kontejneru, příkaz *docker run* má mnohem více proměnných.* <br>
 Pro spuštění příkazu v běžícím kontejneru použijeme příkaz *docker exec*:
 
  	$ docker exec 
