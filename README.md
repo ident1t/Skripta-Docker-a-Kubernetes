@@ -20,21 +20,28 @@ Teď když jsme si vysvětlili využití kontejnerů a Dockeru můžeme přejít
 
 # Dodělat!!!
 
-### Základní příkazy a ukázka
+### Základní příkazy
 Teď přišel čas si už ukázat základní příkazy na ovládání dockeru na UNIX-based systémech.
 Nejprve si ukážeme, jak stáhnout image z registru pomocí *docker pull* příkazu v terminálu:
 
-	$ docker pull <název_distributora>/<název_image>:<verze_image> //např. docker pull linuxserver/plex:latest
+	$ docker pull [OPTIONS] NAME[:TAG|@DIGEST] 	//např. docker pull nginx:latest
 Teď, když máme stažený náš image, můžeme přejít k vytvoření a spuštění našeho kontejneru pomíc příkazu *docker run*:
 
-	$ docker run --name <název_kontejneru> <název_image>:<verze_image> //např. docker run --name my-plex plex:latest
+	$ docker run [OPTIONS] IMAGE [COMMAND] [ARG...] 	//např. docker run --name my-nginx nginx:latest
 **Tohle je pouze nutné minimum, co je potřeba pro spuštění kontejneru, příkaz *docker run* má mnohem více proměnných.* <br>
 Pro spuštění příkazu v běžícím kontejneru použijeme příkaz *docker exec*:
 
- 	$ docker exec 
+ 	$ docker exec [OPTIONS] CONTAINER COMMAND [ARG...] 	//např. docker exec -it my-nginx /bin/bash 
+V příkladě výše se pomocí přepínačů -i (interactive) a -t (terminal) dostaneme dovnitř kontejneru, přesněji do jeho interaktivního bash terminálu.<br>
+Pomocí příkazu *docker ps* si můžeme vypsat všechny kontejnery spuštěné v Docker engineu:
 
+	$ docker ps [OPTIONS]
+A pro vypsání všech stažených imageů použijeme příkaz *docker images*:
 
+	$ docker images [OPTIONS] [REPOSITORY[:TAG]]
 
+### Ukázka
+Ukážeme si spuštění jednoduchého kontejneru s imagem nginx.
 ## Docker v "texťáku" - Docker-Compose
 ### Docker vs Docker-Compose
 
