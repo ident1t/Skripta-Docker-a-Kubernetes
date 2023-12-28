@@ -24,21 +24,21 @@ Teď když jsme si vysvětlili využití kontejnerů a Dockeru můžeme přejít
 Teď přišel čas si už ukázat základní příkazy na ovládání dockeru na UNIX-based systémech.
 Nejprve si ukážeme, jak stáhnout image z registru pomocí `docker pull` příkazu v terminálu:
 
-	$ docker pull [OPTIONS] NAME[:TAG|@DIGEST] 	//např. docker pull nginx:latest
+	docker pull [OPTIONS] NAME[:TAG|@DIGEST] 	//např. docker pull nginx:latest
 Teď, když máme stažený náš image, můžeme přejít k vytvoření a spuštění našeho kontejneru pomíc příkazu `docker run`:
 
-	$ docker run [OPTIONS] IMAGE [COMMAND] [ARG...] 	//např. docker run --name my-nginx nginx:latest
+	docker run [OPTIONS] IMAGE [COMMAND] [ARG...] 	//např. docker run --name my-nginx nginx:latest
 **Tohle je pouze nutné minimum, co je potřeba pro spuštění kontejneru, příkaz *docker run* má mnohem více proměnných.* <br>
 Pro spuštění příkazu v běžícím kontejneru použijeme příkaz `docker exec`:
 
- 	$ docker exec [OPTIONS] CONTAINER COMMAND [ARG...] 	//např. docker exec -it my-nginx /bin/bash 
+ 	docker exec [OPTIONS] CONTAINER COMMAND [ARG...] 	//např. docker exec -it my-nginx /bin/bash 
 V příkladě výše se pomocí přepínačů `-i` (interactive) a `-t` (terminal) dostaneme dovnitř kontejneru, přesněji do jeho interaktivního bash terminálu.<br>
 Pomocí příkazu `docker ps` si můžeme vypsat všechny kontejnery spuštěné v Docker engineu:
 
-	$ docker ps [OPTIONS]
+	docker ps [OPTIONS]
 A pro vypsání všech stažených imageů použijeme příkaz `docker images`:
 
-	$ docker images [OPTIONS] [REPOSITORY[:TAG]]
+	docker images [OPTIONS] [REPOSITORY[:TAG]]
 
 ### Ukázka
 Ukážeme si spuštění jednoduchého kontejneru s imagem nginx.
@@ -61,4 +61,36 @@ version: '3'
 `ports: ` Specifikuje porty na zpřístupnění kontejneru.<br>
 
 K aplikování daného souboru stačí pouze napsat do terminálu příkaz `docker-compose up`.<br>
-<b>Pozor!</b> Toto platí pouze v případě, že se nacházíme ve stejné složce jako konfigurační soubor a soubor se jmenuje `docker-compose.yaml`. Jinak musíme specifikovat cestu k souboru pomocí přepínače `-f`.
+<b>Pozor!</b> Toto platí pouze v případě, že se nacházíme ve stejné složce jako konfigurační soubor a soubor se jmenuje `docker-compose.yaml`. Jinak musíme specifikovat cestu k souboru pomocí přepínače `-f`.<br>
+
+### Ukázka
+Nyní si ukážeme, jak aplikovat danou konfiguraci v praxi. Nejprve vytvoříme nový soubor:
+
+	touch nginx-deployment.yaml
+Potom do souboru uložíme vzorek stejný jako ten výše:
+ 
+```yaml
+version: '3'
+  services:
+    web:
+      image: nginx:latest
+      ports:
+      - "8080:80"
+```
+A nakonec stačí jenom aplikovat konfiguraci:
+
+	docker-compose up -f nginx-deployment.yaml
+
+
+# Kubernetes
+## Úvod do Kubernetes
+### Co to je Kubernetes?
+Kubernetes je nástroj pro orchestraci a automatizování kontejnerů a clusterování serverů. Nejprve je důležité si uvědomit, že Kubernetes <b>neslouží</b> jako container-runtime, ani jako hypervisior.
+Ke správnému fungování Kubernetes je potřeba mít nainstlovaný nějaký container-runtime, jako jsou Docker Engine nebo containerd.<br>
+Kubernetes se využívá hlavně ve velkých počítačových systémech jako jsou data centra, private a public cloud. Kubernetes mimo jiné dokáže provádět load balancing mezi jednotlivými nody (node = operační jednotka clusteru, může se jednat o fyzický server nebo VM).
+### Základní struktura
+<img src="https://kubernetes.io/images/docs/kubernetes-cluster-architecture.svg" height="500px">
+
+## Komponenty Kubernetes
+### Pod
+Musíme si ujasnit, že Kubernetes operuje s tzv. <b>pody</b>. Pod není to samé jako kontejner, ale pro zjednodušení to tak berme.<br>
