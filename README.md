@@ -44,7 +44,7 @@ A pro vypsání všech stažených imageů použijeme příkaz *docker images*:
 Ukážeme si spuštění jednoduchého kontejneru s imagem nginx.
 ## Docker v "texťáku" - Docker-Compose
 ### Docker vs Docker-Compose
-De facto se liší jedině tím, že Docker-compose se konfiguruje pomocí konfiguračního souboru v jazyce YAML nebo JSON. Příkad takového souboru můžeme vidět níže:
+De facto se liší jedině tím, že Docker-compose se konfiguruje pomocí konfiguračního souboru v jazyce YAML nebo JSON. Příklad takového souboru můžeme vidět níže:
 
 # Dodělat náhled souboru
 
