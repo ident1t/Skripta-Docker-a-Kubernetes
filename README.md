@@ -22,21 +22,21 @@ Teď když jsme si vysvětlili využití kontejnerů a Dockeru můžeme přejít
 
 ### Základní příkazy
 Teď přišel čas si už ukázat základní příkazy na ovládání dockeru na UNIX-based systémech.
-Nejprve si ukážeme, jak stáhnout image z registru pomocí *docker pull* příkazu v terminálu:
+Nejprve si ukážeme, jak stáhnout image z registru pomocí `docker pull` příkazu v terminálu:
 
 	$ docker pull [OPTIONS] NAME[:TAG|@DIGEST] 	//např. docker pull nginx:latest
-Teď, když máme stažený náš image, můžeme přejít k vytvoření a spuštění našeho kontejneru pomíc příkazu *docker run*:
+Teď, když máme stažený náš image, můžeme přejít k vytvoření a spuštění našeho kontejneru pomíc příkazu `docker run`:
 
 	$ docker run [OPTIONS] IMAGE [COMMAND] [ARG...] 	//např. docker run --name my-nginx nginx:latest
 **Tohle je pouze nutné minimum, co je potřeba pro spuštění kontejneru, příkaz *docker run* má mnohem více proměnných.* <br>
-Pro spuštění příkazu v běžícím kontejneru použijeme příkaz *docker exec*:
+Pro spuštění příkazu v běžícím kontejneru použijeme příkaz `docker exec`:
 
  	$ docker exec [OPTIONS] CONTAINER COMMAND [ARG...] 	//např. docker exec -it my-nginx /bin/bash 
-V příkladě výše se pomocí přepínačů -i (interactive) a -t (terminal) dostaneme dovnitř kontejneru, přesněji do jeho interaktivního bash terminálu.<br>
-Pomocí příkazu *docker ps* si můžeme vypsat všechny kontejnery spuštěné v Docker engineu:
+V příkladě výše se pomocí přepínačů `-i` (interactive) a `-t` (terminal) dostaneme dovnitř kontejneru, přesněji do jeho interaktivního bash terminálu.<br>
+Pomocí příkazu `docker ps` si můžeme vypsat všechny kontejnery spuštěné v Docker engineu:
 
 	$ docker ps [OPTIONS]
-A pro vypsání všech stažených imageů použijeme příkaz *docker images*:
+A pro vypsání všech stažených imageů použijeme příkaz `docker images`:
 
 	$ docker images [OPTIONS] [REPOSITORY[:TAG]]
 
@@ -46,5 +46,19 @@ Ukážeme si spuštění jednoduchého kontejneru s imagem nginx.
 ### Docker vs Docker-Compose
 De facto se liší jedině tím, že Docker-compose se konfiguruje pomocí konfiguračního souboru v jazyce YAML nebo JSON. Příklad takového souboru můžeme vidět níže:
 
-# Dodělat náhled souboru
+```yaml
+version: '3'
+  services:
+    web:
+      image: nginx:latest
+      ports:
+      - "8080:80"
+```
+`version: '3'` Specifikuje verzi konfigurace.<br>
+`services: ` Obsahuje definice všech služeb.<br>
+`web: ` Jméno dané služby a obsahuje definice konkrétní služby.<br>
+`image: nginx:latest` Specifikuje image pro kontejner.<br>
+`ports: ` Specifikuje porty na zpřístupnění kontejneru.<br>
 
+K aplikování daného souboru stačí pouze napsat do terminálu příkaz `docker-compose up`.<br>
+<b>Pozor!</b> Toto platí pouze v případě, že se nacházíme ve stejné složce jako konfigurační soubor a soubor se jmenuje `docker-compose.yaml`. Jinak musíme specifikovat cestu k souboru pomocí přepínače `-f`.
