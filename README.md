@@ -89,7 +89,7 @@ Kubernetes je nástroj pro orchestraci a automatizování kontejnerů a clustero
 Ke správnému fungování Kubernetes je potřeba mít nainstlovaný nějaký container-runtime, jako jsou Docker Engine nebo containerd.<br>
 Kubernetes se využívá hlavně ve velkých počítačových systémech jako jsou data centra, private a public cloud. Kubernetes mimo jiné dokáže provádět load balancing mezi jednotlivými <b>nody</b> (node = operační jednotka clusteru, může se jednat o fyzický server nebo VM).
 ### Základní struktura
-<img src="https://kubernetes.io/images/docs/kubernetes-cluster-architecture.svg" height="500px">
+<img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" height="500px">
 
 ## Komponenty Kubernetes
 ### Pod
