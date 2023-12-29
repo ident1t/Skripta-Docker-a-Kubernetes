@@ -94,3 +94,10 @@ Kubernetes se využívá hlavně ve velkých počítačových systémech jako js
 ## Komponenty Kubernetes
 ### Pod
 Musíme si ujasnit, že Kubernetes operuje s tzv. <b>pody</b>. Pod není to samé jako kontejner, ale pro zjednodušení to tak berme.<br>
+### Deployment
+
+### Service
+
+### Configmap a Secret
+
+### Ukázka
