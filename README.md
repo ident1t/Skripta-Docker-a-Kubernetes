@@ -109,7 +109,7 @@ spec:		#Specifikace podů
   replicas: 	#Počet podů.
   selector:
     matchLables:
-      app: 	#Aplikace, kterou to 
+      app: 	#Aplikace, pro kterou tvoříme ReplicaSet (mimo rámec prezentace).
   template:
     metadata:
       labels:
