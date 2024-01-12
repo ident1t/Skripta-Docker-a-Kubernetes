@@ -108,7 +108,7 @@ metadata:
 spec:		#Specifikace podů
   replicas: 	#Počet podů.
   selector:
-    matchLables
+    matchLables:
       app: 	#Aplikace, kterou to 
   template:
     metadata:
