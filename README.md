@@ -96,6 +96,32 @@ Kubernetes se využívá hlavně ve velkých počítačových systémech jako js
 ### Pod
 Musíme si ujasnit, že Kubernetes operuje s tzv. <b>pody</b>. Pod není to samé jako kontejner, ale pro zjednodušení to tak berme.<br>
 ### Deployment
+V <b>deployment</b>u specifikujeme požadovaný status podu/ů, který chceme mít aplikován na clusteru.
+Základní šablona deploymentu v YAML:
+```yaml
+apiVersion: 	#Verze API (může se lišit podle použitého komponentu).
+kind:		#Druh komponentu, který chceme definovat.
+metadata:	
+  name:		#Jméno deploymentu.
+  labels:	#Odkaz na danou aplikaci.
+    app: 	#Daná aplikace.
+spec:		#Specifikace podů
+  replicas: 	#Počet podů
+  selector:	#Jaká aplikace má být přiřazena k podu/ům.
+    matchLables
+      app: 
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+    
+```
 
 ### Service
 
