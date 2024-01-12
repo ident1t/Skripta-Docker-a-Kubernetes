@@ -106,20 +106,20 @@ metadata:
   labels:	#Odkaz na danou aplikaci.
     app: 	#Daná aplikace.
 spec:		#Specifikace podů
-  replicas: 	#Počet podů
-  selector:	#Jaká aplikace má být přiřazena k podu/ům.
+  replicas: 	#Počet podů.
+  selector:
     matchLables
-      app: 
+      app: 	#Aplikace, kterou to 
   template:
     metadata:
       labels:
-        app: nginx
-    spec:
+        app: nginx	#Aplikace, pro kterou má být aplikován template.
+    spec:		
       containers:
-      - name: nginx
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
+      - name: nginx		#Jméno containeru.
+        image: nginx:1.14.2	#Určitý image.
+        ports:			#Porty otevřené porty containeru.
+        - containerPort: 	#Port, přes který bude container přístupný uvnitř clusteru.
     
 ```
 
