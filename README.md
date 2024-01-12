@@ -14,12 +14,6 @@ To má ovšem i svá omezení, např. kvůli tomu nemůžeme spouštět aplikace
 Jak jsme si již řekli kontejnery potřebují pro virtualizaci *container runtime*, třeba jako je open-source Docker engine. Docker nám mimo jiné umožňuje vytváření vlastních imidžů pro naše aplikace a dokonce jejich zpřístupnění pomocí platformy Docker Hub (https://hub.docker.com), jednoduchý management kontejnerů a další funkce.<br>
 Kdy ale vlastně využijeme kontejner? Na to je velice jednoduchá odpověď: Všude, kde chceme mít kompletně izolovanou aplikaci od zbytku systému, ať už kvůli bezpečnosti, nebo aby naše aplikace nebyla ovlivněna konfiguracemi jiných aplikací, které by mohly ovlivnit kompatibilitu se systémem.
 
-### Úvod do Docker networking
-Teď když jsme si vysvětlili využití kontejnerů a Dockeru můžeme přejít k dalšímu důležitému tématu a to je *Docker networking*, alias ke komunikaci mezi kontejnery (a aplikacemi v nich) a datovou sítí. Tohle téma je ovšem příliš rozsáhlé, abychom se mu mohli příliš věnovat, tudíž to bude velice stručné.
-
-
-# Dodělat!!!
-
 ### Základní příkazy
 Teď přišel čas si už ukázat základní příkazy na ovládání dockeru na UNIX-based systémech.
 Nejprve si ukážeme, jak stáhnout image z registru pomocí `docker pull` příkazu v terminálu:
@@ -99,8 +93,8 @@ Musíme si ujasnit, že Kubernetes operuje s tzv. <b>pody</b>. Pod není to sam�
 V <b>deployment</b>u specifikujeme požadovaný status podu/ů, který chceme mít aplikován na clusteru.
 Základní šablona deploymentu v YAML:
 ```yaml
-apiVersion: 	#Verze API (může se lišit podle použitého komponentu).
-kind:		#Druh komponentu, který chceme definovat.
+apiVersion: apps/v1
+kind: Deployment
 metadata:	
   name:		#Jméno deploymentu.
   labels:	#Odkaz na danou aplikaci.
@@ -113,18 +107,68 @@ spec:		#Specifikace podů
   template:
     metadata:
       labels:
-        app: nginx	#Aplikace, pro kterou má být aplikován template.
+        app: 		#Aplikace, pro kterou má být aplikován template.
     spec:		
       containers:
-      - name: nginx		#Jméno containeru.
-        image: nginx:1.14.2	#Určitý image.
+      - name: 			#Jméno containeru.
+        image: 			#Určitý image.
         ports:			#Porty otevřené porty containeru.
         - containerPort: 	#Port, přes který bude container přístupný uvnitř clusteru.
     
 ```
 
 ### Service
-
-### Configmap a Secret
-
+Service slouží ke zpřístupnění podu buď interně (mezi dalšími pody) nebo externě (pod je dostupný zvenku clusteru).
+Šablona pro service v YAML:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: 		#Jméno service.
+spec:
+  selector:
+    app: 		#Aplikace, pro kterou je service určená.
+  ports:
+    - protocol: 	#Protocol transportní vrstvy (tcp/udp).
+      port: 		#Port, na který překládáme. Přes něj bude pod dostupný uvnitř clusteru.
+      targetPort: 	#Port podu, který přkládáme.
+```
 ### Ukázka
+Nastaveni aplikace nginx deploymentu a service v jednom souboru.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: nginx-full-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort
+  selector:
+    app: nginx
+  ports:
+    - nodePort: 30006
+      targetPort: 8080
+      port: 80
+```
