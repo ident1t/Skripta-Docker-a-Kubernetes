@@ -191,3 +191,6 @@ Nyní můžeme danou konfiguraci aplikovat pomocí příkazu `kubectl apply -f n
 
 Pro kontrolu si třeba můžeme vypsat existující pody příkazem `kubectl get pods`.
 <img src="ukazka1.png"><br>
+
+Teď když zadáme do prohlížeče naší adresu a příslušný port se nám objeví základní webovka nginx aplikace.
+<img src"">
