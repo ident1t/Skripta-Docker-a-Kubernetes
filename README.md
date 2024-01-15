@@ -133,48 +133,55 @@ spec:
       port: 		#Port, na který překládáme. Přes něj bude pod dostupný uvnitř clusteru.
       targetPort: 	#Port podu, který přkládáme.
 ```
+#### Externí vs. interní service.
+
 ## Základní interakce s Kubernetes clusterem
 Pro interakci s clusterem používáme nástroj `kubectl`. Ukážeme si jen nejzákladnější příkazy, bez kterých se prostě neobejdem.<br>
-První (nejvíce používaný) je příkaz:
+První (nejvíce používaný) je příkaz na vypisování informací o clusteru a jeho komponentech `kubectl get`:
 
 	kubectl get #pods/deployments/services apod.
 
-### Ukázka
-Nastaveni aplikace nginx deploymentu a service v jednom souboru.
+Tento příkaz nám velice pomáhá při řešení různých problémů s clusterem a spuštěnými aplikacemi.
+Další velice užitečný příkaz je `kubectl apply` sloužící k aplikování daného konfiguračního souboru.
+
+	kubectl apply -f #cesta k souboru
+
+## Ukázka
+Nastaveni aplikace nginx deploymentu a service v jednom souboru. Níže je vypsán náš konfigurační soubor pro ukázku, obsahující konfiguraci deploymentu a service. Takováto situace je velicd obvyklá, protože deployment bez service se ve většině případů nepoužívá, protože bez service nemůžeme interagovat s deploymentem.
 ```yaml
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment	#Spouštíme deployment
 metadata:
   namespace: default
-  name: nginx-full-deployment
+  name: nginx-full-deployment	#S názvem nginx-full-deployment
   labels:
-    app: nginx
+    app: my-nginx	#Pro aplikaci s názvem my-nginx
 spec:
-  replicas: 10
+  replicas: 10		#Chceme vytvořit 10 podů
   selector:
     matchLabels:
-      app: nginx
+      app: my-nginx
   template:
     metadata:
       labels:
-        app: nginx
+        app: my-nginx
     spec:
       containers:
       - name: nginx
-        image: nginx:latest
+        image: nginx:latest	#Použijeme nejnovější image od nginxu.
         ports:
-        - containerPort: 8080
+        - containerPort: 8080	#S portem 8080
 ---
 apiVersion: v1
-kind: Service
+kind: Service		#Spouštíme service
 metadata:
-  name: nginx-service
+  name: nginx-service	#S názvem nginx-service
 spec:
-  type: NodePort
+  type: NodePort	#Jedná se o externí service
   selector:
-    app: nginx
+    app: my-nginx		#Pro aplikaci my-nginx
   ports:
-    - nodePort: 30006
-      targetPort: 8080
-      port: 80
+    - targetPort: 8080		#Port, který hledáme, je 8080
+      port: 80			#Interně pod je interně dostupný přes port 80
+      nodePort: 30006		#Externě je dostupný přes port 30006
 ```
