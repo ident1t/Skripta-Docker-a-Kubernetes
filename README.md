@@ -193,4 +193,4 @@ Pro kontrolu si třeba můžeme vypsat existující pody příkazem `kubectl get
 <img src="ukazka1.png"><br>
 
 Teď když zadáme do prohlížeče naší adresu a příslušný port se nám objeví základní webovka nginx aplikace.
-<img src"">
+<img src="Screenshot from 2024-01-15 10-41-34.png">
