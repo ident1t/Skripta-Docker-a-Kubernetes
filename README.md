@@ -133,6 +133,12 @@ spec:
       port: 		#Port, na který překládáme. Přes něj bude pod dostupný uvnitř clusteru.
       targetPort: 	#Port podu, který přkládáme.
 ```
+## Základní interakce s Kubernetes clusterem
+Pro interakci s clusterem používáme nástroj `kubectl`. Ukážeme si jen nejzákladnější příkazy, bez kterých se prostě neobejdem.<br>
+První (nejvíce používaný) je příkaz:
+
+	kubectl get #pods/deployments/services apod.
+
 ### Ukázka
 Nastaveni aplikace nginx deploymentu a service v jednom souboru.
 ```yaml
