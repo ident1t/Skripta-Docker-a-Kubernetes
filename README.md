@@ -133,7 +133,8 @@ spec:
       port: 		#Port, na který překládáme. Přes něj bude pod dostupný uvnitř clusteru.
       targetPort: 	#Port podu, který přkládáme.
 ```
-#### Externí vs. interní service.
+#### Externí vs. interní service
+Tzv. externí service je dostupná i z jiných zařízení. Interní je pouze z clusteru.
 
 ## Základní interakce s Kubernetes clusterem
 Pro interakci s clusterem používáme nástroj `kubectl`. Ukážeme si jen nejzákladnější příkazy, bez kterých se prostě neobejdem.<br>
@@ -181,7 +182,10 @@ spec:
   selector:
     app: my-nginx		#Pro aplikaci my-nginx
   ports:
-    - targetPort: 8080		#Port, který hledáme, je 8080
-      port: 80			#Interně pod je interně dostupný přes port 80
+    - targetPort: 8080		#Interně pod je interně dostupný přes port 80
+      port: 80			#Port, který hledáme, je 8080
       nodePort: 30006		#Externě je dostupný přes port 30006
 ```
+Nyní můžeme danou konfiguraci aplikovat pomocí příkazu:
+
+ 	kubectl apply -f nginx-deployment.yaml
