@@ -186,6 +186,8 @@ spec:
       port: 80			#Port, který hledáme, je 8080
       nodePort: 30006		#Externě je dostupný přes port 30006
 ```
-Nyní můžeme danou konfiguraci aplikovat pomocí příkazu:
+Nyní můžeme danou konfiguraci aplikovat pomocí příkazu `kubectl apply -f nginx.yaml`.
+
+
 
  	kubectl apply -f nginx-deployment.yaml
