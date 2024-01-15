@@ -35,7 +35,10 @@ A pro vypsání všech stažených imageů použijeme příkaz `docker images`:
 	docker images [OPTIONS] [REPOSITORY[:TAG]]
 
 ### Ukázka
-Ukážeme si spuštění jednoduchého kontejneru s imagem nginx.
+Ukážeme si spuštění jednoduchého kontejneru s imagem nginx. Při použití příkazu `docker run` nemusíme stahovat příslušná image, image se stáhne sám.
+
+	docker run --name my-nginx image
+Následně můžeme verifikovat, že kontejner běží pomocí příkazu `docker ps`.
 ## Docker v "texťáku" - Docker-Compose
 ### Docker vs Docker-Compose
 De facto se liší jedině tím, že Docker-compose se konfiguruje pomocí konfiguračního souboru v jazyce YAML nebo JSON. Příklad takového souboru můžeme vidět níže:
